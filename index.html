@@ -2,22 +2,753 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>TheArchitect</title>
+
 <style>
-html, body {
-    margin: 0;
-    height: 100%;
-    background-color: #0d1117;
+@font-face {
+    font-family: 'Thunderman';
+    src: url('fonts/Thunderman.ttf') format('truetype');
 }
 
 body {
+    margin: 0;
+    background-color: #0d1117;
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto;
+    height: 400px;
+}
+
+h1 {
+    font-family: 'Thunderman', sans-serif;
+    color: #fff9cb;
+    font-size: 102px;
+    font-weight: normal;
+    text-align: center;
+    margin: 20px auto 40px auto;
+    width: fit-content;
+    border-bottom: 7px solid #fff9cb;
+    padding-bottom: 8px;
+}
+
+.card {
+    display: block;
+    margin: 0 auto;
+    height: 700px;
+}
+
+/* =========================
+   SKILLS CAROUSEL
+========================= */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 100px auto;
+    overflow: hidden;
+    height: 420px;
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.carousel-item img {
+    width: 260px;
+    height: 260px;
+    object-fit: contain;
+}
+
+.carousel-item.left {
+    opacity: 0.55;
+    transform: translate(calc(-50% - 420px), -50%) scale(0.82);
+}
+
+.carousel-item.center {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+    z-index: 2;
+}
+
+.carousel-item.right {
+    opacity: 0.55;
+    transform: translate(calc(-50% + 420px), -50%) scale(0.82);
+}
+
+/* BOTÕES CUSTOMIZADOS */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 5;
+}
+
+.carousel-btn img {
+    width: 90px;
+    height: auto;
+    display: block;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.carousel-btn:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.15);
+}
+
+.prev { left: 90px; }
+.next { right: 90px; }
+
+/* =========================
+   PROJECTS
+========================= */
+.projects-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 120px;
+}
+
+.pack-stage {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    min-height: 520px;
+    margin-bottom: 20px;
+}
+
+.pack-image {
+    width: 380px;
+    max-width: 85vw;
+    cursor: pointer;
+    transition: transform 0.25s ease, opacity 0.35s ease;
+    user-select: none;
+}
+
+.pack-image:hover {
+    transform: scale(1.03);
+}
+
+.pack-image.hide {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.pack-hint {
+    margin-top: 18px;
+    color: #fff9cb;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    opacity: 0.95;
+}
+
+.projects-grid {
+    width: 100%;
+    max-width: 1200px;
+    display: none;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px 10px;
+    justify-items: center;
+    align-items: start;
+    justify-content: center;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.projects-grid.show {
+    display: grid;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-link {
+    display: block;
+    text-decoration: none;
+}
+
+.project-only-image {
+    width: 350px;
+    height: auto;
+    display: block;
+    transition: transform 0.25s ease;
+    cursor: pointer;
+}
+
+.project-only-image:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+
+/* 3 em cima */
+.projects-grid > a:nth-child(1) {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+.projects-grid > a:nth-child(2) {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+}
+.projects-grid > a:nth-child(3) {
+    grid-column: 5 / span 2;
+    grid-row: 1;
+}
+
+/* 2 em baixo */
+.projects-grid > a:nth-child(4) {
+    grid-column: 2 / span 2;
+    grid-row: 2;
+}
+.projects-grid > a:nth-child(5) {
+    grid-column: 4 / span 2;
+    grid-row: 2;
+}
+
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 500px;
+        gap: 24px;
+    }
+
+    .projects-grid > a:nth-child(1),
+    .projects-grid > a:nth-child(2),
+    .projects-grid > a:nth-child(3),
+    .projects-grid > a:nth-child(4),
+    .projects-grid > a:nth-child(5) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        max-width: 260px;
+    }
+
+    .pack-image {
+        width: 300px;
+    }
+}
+
+.project-card {
+    width: 100%;
+    max-width: 250px;
+    min-height: 360px;
+    background: #161b22;
+    border: 4px solid #fff9cb;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 16px 35px rgba(0,0,0,0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 22px 40px rgba(0,0,0,0.36);
+}
+
+.project-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.project-info {
+    padding: 16px;
+    text-align: left;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.project-info h3 {
+    margin: 0 0 10px 0;
+    color: #fff9cb;
+    font-size: 24px;
+}
+
+.project-info p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    color: #d9d9d9;
+}
+
+/* =========================
+   TEAM
+========================= */
+.team-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 140px auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.team-card {
+    width: 100%;
+    max-width: 1300px;
+    border: 4px solid #fff9cb;
+    border-radius: 28px;
+    background: #161b22;
+    padding: 42px 48px;
+    box-sizing: border-box;
+    box-shadow: 0 16px 35px rgba(0,0,0,0.28);
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    text-align: left;
+}
+
+.team-photo-wrap {
+    flex-shrink: 0;
+    width: 280px;
+    height: 280px;
+    border: 5px solid #fff9cb;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d1117;
+}
+
+.team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.team-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.team-name {
+    margin: 0;
+    font-family: 'Thunderman', sans-serif;
+    color: #fff9cb;
+    font-size: 64px;
+    font-weight: normal;
+    line-height: 1;
+    padding-bottom: 14px;
+    border-bottom: 5px solid #fff9cb;
+    width: fit-content;
+}
+
+.team-role {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff9cb;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.team-description {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #e6e6e6;
+    font-size: 24px;
+    line-height: 1.8;
+    max-width: 720px;
+}
+
+.team-name-link {
+    text-decoration: none;
+}
+
+.team-name-link:hover .team-name {
+    transform: translateY(-3px);
+    opacity: 0.85;
+}
+
+@media (max-width: 980px) {
+    .team-card {
+        padding: 34px 28px;
+    }
+
+    .team-member {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .team-info {
+        align-items: center;
+    }
+
+    .team-name {
+        font-size: 48px;
+    }
+
+    .team-role {
+        font-size: 22px;
+    }
+
+    .team-description {
+        font-size: 20px;
+        max-width: 100%;
+    }
+
+    .team-photo-wrap {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 560px) {
+    .team-name {
+        font-size: 36px;
+    }
+
+    .team-role {
+        font-size: 18px;
+    }
+
+    .team-description {
+        font-size: 17px;
+        line-height: 1.6;
+    }
+
+    .team-photo-wrap {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+/* =========================
+   CONNECT ME
+========================= */
+.connect-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 160px;
+}
+
+.connect-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.connect-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-decoration: none;
+}
+
+.connect-item img {
+    width: 500px;
+    height: auto;
+    transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.connect-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.connect-tag {
+    border: 2px solid #fff9cb;
+    color: #fff9cb;
+    padding: 8px 14px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background: transparent;
 }
 </style>
 </head>
 <body>
-    <img src="assets/thearchitect.png" height="450" alt="name"/>
+
+<img src="assets/thearchitect.png" alt="name" class="logo"/>
+
+<br><br><br><br><br><br>
+
+<h1>About Me</h1>
+
+<br><br><br>
+
+<img src="assets/card.png" alt="name" class="card"/>
+
+<br><br><br><br><br><br>
+
+<h1>Skills</h1>
+
+<br><br><br>
+
+<div class="carousel">
+    <button class="carousel-btn prev" id="skillsPrev">
+        <img src="assets/left-arrow.png" alt="Previous">
+    </button>
+
+    <div class="carousel-track" id="skillsCarousel">
+        <div class="carousel-item"><img src="assets/mypython.png" alt="Python"></div>
+        <div class="carousel-item"><img src="assets/mylinux.png" alt="Linux"></div>
+        <div class="carousel-item"><img src="assets/mybash.png" alt="Bash"></div>
+        <div class="carousel-item"><img src="assets/myc++.png" alt="C++"></div>
+        <div class="carousel-item"><img src="assets/myjs.png" alt="JavaScript"></div>
+    </div>
+
+    <button class="carousel-btn next" id="skillsNext">
+        <img src="assets/right-arrow.png" alt="Next">
+    </button>
+</div>
+
+<br><br><br><br><br><br>
+
+<h1>Projects</h1>
+
+<br><br><br>
+
+<div class="projects-section">
+    <div class="pack-stage" id="packStage">
+        <div>
+            <img
+                src="assets/pack.png"
+                alt="My Projects Pack"
+                class="pack-image"
+                id="projectPack"
+            >
+            <div class="pack-hint" id="packHint">Click 3 times to open the pack</div>
+        </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+        <a href="https://github.com/0xadamastor/C.A.L.M.A." target="_blank" class="project-link">
+            <img src="assets/calma_card.png" alt="Calma Project" class="project-only-image">
+        </a>
+
+        <a href="https://github.com/0xthearchitect/mimic" target="_blank" class="project-link">
+            <img src="assets/mimic_card.png" alt="Mimic Project" class="project-only-image">
+        </a>
+
+        <a href="https://github.com/0xthearchitect/cromometro" target="_blank" class="project-link">
+            <img src="assets/cromometro_card.png" alt="Cromometro Project" class="project-only-image">
+        </a>
+
+        <a href="https://github.com/0xthearchitect/natabase" target="_blank" class="project-link">
+            <img src="assets/natabase_card.png" alt="Natabase Project" class="project-only-image">
+        </a>
+
+        <a href="" target="_blank" class="project-link">
+            <img src="assets/beatrooter_card.png" alt="Beatrooter Project" class="project-only-image">
+        </a>
+    </div>
+</div>
+
+<br><br><br><br><br><br>
+
+<h1>Team</h1>
+
+<br><br><br>
+
+<section class="team-section">
+    <div class="team-card">
+        <div class="team-member">
+            <div class="team-photo-wrap">
+                <img src="assets/DevilBoy.jpg" alt="Member 1" class="team-photo">
+            </div>
+
+            <div class="team-info">
+                <a href="https://github.com/teuuser" target="_blank" class="team-name-link">
+                    <h2 class="team-name">DevilBoy</h2>
+                </a>
+                <p class="team-role">Project Manager and Team Leader</p>
+                <p class="team-description">
+                    A man as full of ideas as he is of experience. He points us in the right direction and takes care of everything that is democratically boring. He says he has no skills, but honestly, putting up with us is already a huge skill in my opinion.
+
+                    Thanks Rodrigo, for putting up with us.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="team-card">
+        <div class="team-member">
+            <div class="team-photo-wrap">
+                <img src="assets/0xAdamastor.png" alt="Member 2" class="team-photo">
+            </div>
+
+            <div class="team-info">
+                <a href="https://github.com/teuuser" target="_blank" class="team-name-link">
+                    <h2 class="team-name">0xAdamastor</h2>
+                </a>
+                <p class="team-role">Cybersecurity</p>
+                <p class="team-description">
+                    Why is Rafa important to the team? Well... he... is a good person.
+
+                    Just kidding. He’s our professional system breaker. He finds more vulnerabilities than girlfriends!
+
+                    My favorite Q&A 💋
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="team-card">
+        <div class="team-member">
+            <div class="team-photo-wrap">
+                <img src="assets/ManWithThatHat.png" alt="Member 2" class="team-photo">
+            </div>
+
+            <div class="team-info">
+                <a href="https://github.com/teuuser" target="_blank" class="team-name-link">
+                    <h2 class="team-name">ManWithThatHat</h2>
+                </a>
+                <p class="team-role">Designer</p>
+                <p class="team-description">
+                    There’s no one more creative than this guy (there probably is, but he’s on my team so I have to hype my team up 🙃). He’s also the creator of our name, logos, and most of the designs we use on our websites and apps.
+
+                    Metal is for grown-ups, but my little Zézinho is the exception. 🤘
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br><br><br><br><br><br>
+
+<h1>Connect Me</h1>
+
+<br><br><br>
+
+<section class="connect-section">
+    <div class="connect-container">
+
+        <a href="https://instagram.com/0xthearchitect" target="_blank" class="connect-item">
+            <img src="assets/insta.png" alt="Instagram">
+        </a>
+
+        <a href="https://linkedin.com/in/0xthearchitect" target="_blank" class="connect-item">
+            <img src="assets/linkedin.png" alt="LinkedIn">
+        </a>
+
+        <a href="https://github.com/0xthearchitect" target="_blank" class="connect-item">
+            <img src="assets/github.png" alt="GitHub">
+        </a>
+
+    </div>
+</section>
+</section>
+<script>
+/* =========================
+   SKILLS CAROUSEL
+========================= */
+const skillsItems = document.querySelectorAll('#skillsCarousel .carousel-item');
+let skillsIndex = 2;
+
+function updateSkillsCarousel() {
+    skillsItems.forEach((item, i) => {
+        item.classList.remove('left', 'center', 'right');
+
+        const leftIndex = (skillsIndex - 1 + skillsItems.length) % skillsItems.length;
+        const rightIndex = (skillsIndex + 1) % skillsItems.length;
+
+        if (i === skillsIndex) {
+            item.classList.add('center');
+        } else if (i === leftIndex) {
+            item.classList.add('left');
+        } else if (i === rightIndex) {
+            item.classList.add('right');
+        }
+    });
+}
+
+document.getElementById('skillsNext').addEventListener('click', () => {
+    skillsIndex = (skillsIndex + 1) % skillsItems.length;
+    updateSkillsCarousel();
+});
+
+document.getElementById('skillsPrev').addEventListener('click', () => {
+    skillsIndex = (skillsIndex - 1 + skillsItems.length) % skillsItems.length;
+    updateSkillsCarousel();
+});
+
+updateSkillsCarousel();
+
+/* =========================
+   PROJECT PACK OPENING
+========================= */
+const pack = document.getElementById('projectPack');
+const packHint = document.getElementById('packHint');
+const projectsGrid = document.getElementById('projectsGrid');
+const packStage = document.getElementById('packStage');
+
+const packStages = [
+    'assets/pack.png',
+    'assets/pack-tear-1.png',
+    'assets/pack-tear-2.png',
+    'assets/pack-tear-3.png'
+];
+
+let packClicks = 0;
+
+pack.addEventListener('click', () => {
+    packClicks++;
+
+    if (packClicks <= 3) {
+        pack.src = packStages[packClicks];
+    }
+
+    if (packClicks === 1) {
+        packHint.textContent = 'Keep ripping...';
+    }
+
+    if (packClicks === 2) {
+        packHint.textContent = 'One more click...';
+    }
+
+    if (packClicks === 3) {
+        packHint.textContent = 'Pack opened!';
+        pack.classList.add('hide');
+
+        setTimeout(() => {
+            packStage.style.display = 'none';
+            projectsGrid.classList.add('show');
+        }, 350);
+    }
+});
+</script>
+
 </body>
 </html>
