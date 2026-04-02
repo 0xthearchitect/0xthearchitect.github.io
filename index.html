@@ -49,6 +49,8 @@ h1 {
     display: block;
     margin: 0 auto;
     height: 700px;
+    transform-origin: center top;
+    will-change: transform;
 }
 
 /* =========================
@@ -758,6 +760,63 @@ pack.addEventListener('click', () => {
         }, 350);
     }
 });
+
+/* =========================
+   CARD SCROLL SWAY
+========================= */
+const aboutCard = document.querySelector('.card');
+
+let lastScrollY = window.scrollY;
+let lastTime = performance.now();
+
+let swayVelocity = 0;
+let swayAngle = 0;
+let ticking = false;
+
+const maxAngle = 7;         // inclinação máxima
+const velocityBoost = 0.12; // força do scroll no balanço
+const friction = 0.92;      // desaceleração
+const springBack = 0.08;    // força para voltar ao centro
+
+function animateCard() {
+    swayVelocity *= friction;
+    swayVelocity += (-swayAngle) * springBack;
+    swayAngle += swayVelocity;
+
+    if (swayAngle > maxAngle) swayAngle = maxAngle;
+    if (swayAngle < -maxAngle) swayAngle = -maxAngle;
+
+    aboutCard.style.transform = `rotate(${swayAngle}deg)`;
+
+    if (Math.abs(swayVelocity) > 0.01 || Math.abs(swayAngle) > 0.01) {
+        requestAnimationFrame(animateCard);
+    } else {
+        swayVelocity = 0;
+        swayAngle = 0;
+        aboutCard.style.transform = 'rotate(0deg)';
+        ticking = false;
+    }
+}
+
+window.addEventListener('scroll', () => {
+    const now = performance.now();
+    const currentScrollY = window.scrollY;
+
+    const deltaY = currentScrollY - lastScrollY;
+    const deltaTime = now - lastTime || 16;
+
+    const scrollSpeed = deltaY / deltaTime;
+
+    swayVelocity += scrollSpeed * velocityBoost;
+
+    lastScrollY = currentScrollY;
+    lastTime = now;
+
+    if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(animateCard);
+    }
+}, { passive: true });
 </script>
 
 </body>
